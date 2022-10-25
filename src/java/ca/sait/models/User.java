@@ -13,14 +13,14 @@ public class User {
     private String firstName;
     private String lastName;
     private String password;
-    private String role;
+    private Role role;
     private boolean active;
     
     public User() {
         
     }
 
-    public User(String email, boolean active, String firstName, String lastName, String password, String role) {
+    public User(String email, boolean active, String firstName, String lastName, String password, Role role) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,11 +29,11 @@ public class User {
         this.active = active;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
     

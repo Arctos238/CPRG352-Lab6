@@ -44,6 +44,7 @@ public class UserServlet extends HttpServlet {
         request.getSession().setAttribute("users", users);
         request.getSession().setAttribute("roles", roles);
         
+        
          this.getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
 
