@@ -5,17 +5,16 @@
 package sa.sait.services;
 
 import ca.sait.dataaccess.ConnectionPool;
+import ca.sait.dataaccess.UserDB;
 import ca.sait.models.Role;
 import ca.sait.models.User;
 import java.sql.Connection;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
- * @author Arcto
+ * @author J.Pointer
  */
 public class UserService {
 
@@ -26,48 +25,43 @@ public class UserService {
     }
 
     public ArrayList<User> getAll(ArrayList<Role> roles) {
-        Connection conn = ConnectionPool.getInstance().getConnection();
         users = new ArrayList();
-
-        try {
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery("SELECT * FROM user");
-
-            while (rs.next()) {
-                String userEmail = rs.getString(1);
-                boolean userActive = (rs.getInt(2) == 1) ? true : false;
-                String userFirstName = rs.getString(3);
-                String userLastName = rs.getString(4);
-                String userPassword = rs.getString(5);
-                int role = rs.getInt(6);
-                
-                String userRole = "No Role Assigned";
-                
-                for(int i = 0; i < roles.size(); i++) {
-                    System.err.println(role);
-                    if(role == roles.get(i).getRoleId()) {
-                        userRole = roles.get(i).getRoleName();
-                    }
-                }
-                
-                User user = new User(userEmail, userActive, userFirstName, userLastName, userPassword, userRole);
-                
-                users.add(user);
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        
+        UserDB udb = new UserDB();
+        
+        udb.getAll(users, roles);
 
         return users;
     }
 
     public void updateUser(User user) {
-        users.add(user);
+        UserDB udb = new UserDB();
+        
+        udb.updateUser(user);
+        
+        for(int i = 0; i < users.size(); i++) {
+            if (users.get(i).getEmail().equals(user.getEmail())) {
+                users.get(i).setFirstName(user.getFirstName());
+                users.get(i).setLastName(user.getLastName());
+                users.get(i).setRole(user.getRole());
+                users.get(i).setActive(user.isActive());
+            }
+        }
     }
     
     public void deleteUser(User user) {
+        UserDB udb = new UserDB();
+        
+        udb.deleteUser(user);
+        
         users.remove(user);
+    }
+    
+    public void createUser(User user) {
+        UserDB udb = new UserDB();
+        
+        udb.createUser(user);
+        
+        users.add(user);
     }
 }

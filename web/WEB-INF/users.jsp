@@ -13,45 +13,53 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
     <body class="bg-dark text-white" style="font-size: 14px;">
-        <div class="d-flex flex-column flex-lg-row flex-fill justify-content-between mt-5 container-fluid"> 
-            <form class="bg-secondary text-white mb-2 mt-2 p-2 ml-1 mr-2 border border-light">
+        <div class="d-flex flex-column flex-xl-row flex-fill justify-content-between mt-5 container-fluid"> 
+            <form class="bg-secondary text-white mb-2 mt-2 p-2 ml-lg-3 ml-1 mr-2 border border-light">
                 <h2 class="text-center">Add User</h2>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputEmail">Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        <input type="email" name="inputEmail" class="form-control" id="inputEmail" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputPassword">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                        <input type="password" name="inputPassword" class="form-control" id="inputPassword" placeholder="Password">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputFirstName">First Name</label>
-                        <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                        <input type="text" name="inputFirstName" class="form-control" id="inputFirstName" placeholder="First Name">
                     </div>
                     <div class="form-group col-md">
                         <label for="inputLastName">Last Name</label>
-                        <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+                        <input type="text" name="inputLastName" class="form-control" id="inputLastName" placeholder="Last Name">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputRole">Role</label>
-                        <select id="inputRole" class="form-control">
+                        <select id="inputRole" name="inputRole" class="form-control">
                             <option selected>Select a role...</option>
-                            <option>System Admin</option>
-                            <option>Regular User</option>
-                            <option>Company Admin</option>
+                            <c:forEach var="role" items="${roles}">
+                                <option>${role.roleName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="inputActive">Active</label>
+                        <select id="inputActive" name="inputActive" class="form-control">
+                            <option selected>Is active...</option>
+                            <option>Yes</option>
+                            <option>No</option>
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary bg-light text-dark">Sign in</button>
+                <button type="submit" class="btn btn-primary bg-light text-dark">Save</button>
             </form>
-            <div class="border border-light mb-2 mt-2 ml-1 mr-2 p-2 flex-grow-1">
+            <div class="border border-light mb-2 mt-2 ml-4 mr-4 p-2 flex-grow-1">
                 <h2 class="text-center">Manage Users</h2>
                 <table class="table table-striped table-dark">
                     <thead>
@@ -72,7 +80,16 @@
                                 <td>${user.firstName}</td>
                                 <td>${user.lastName}</td>
                                 <td>${user.role}</td>
-                                <td>${user.active}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${user.active==true}">
+                                            Yes 
+                                        </c:when>    
+                                        <c:otherwise>
+                                            No
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
                                 <td><a href="#">Edit</a></td>
                                 <td><a href="#">Delete</a></td>
                             </tr>
@@ -80,40 +97,59 @@
                     </tbody>
                 </table>
             </div>
-            <form class="bg-secondary text-white mb-2 mt-2 p-2 ml-1 mr-2 border border-light flex-grow-2" style="font-size: 16px">
+            
+            <c:if test="${selectedUser != null}">
+                            <form class="bg-secondary text-white mb-2 mt-2 p-2 ml-1 mr-lg-3 mr-2 border border-light flex-grow-2" style="font-size: 16px">
                 <h2 class="text-center">Edit User</h2>
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="selectedEmail">Email</label>
-                        <input disabled type="email" class="form-control" id="selectedEmail">
+                        <input name="selectedEmail" disabled type="email" class="form-control" id="selectedEmail" placeholder="${selectedUser.email}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="selectedEmail">First Name</label>
-                        <input disabled type="email" class="form-control" id="selectedFirstName">
+                        <label for="selectedFirstName">First Name</label>
+                        <input name="selectedFirstName" type="text" class="form-control" id="selectedFirstName" placeholder="${selectedUser.firstName}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="selectedEmail">Last Name</label>
-                        <input disabled type="email" class="form-control" id="selectedLastName">
+                        <label for="selectedLastName">Last Name</label>
+                        <input name="selectedLastName" type="text" class="form-control" id="selectedLastName" placeholder="${selectedUser.lastName}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <label for="inputRole">Role</label>
-                        <select disabled id="selectedRole" class="form-control">
-                            <option selected></option>
-                            <option>System Admin</option>
-                            <option>Regular User</option>
-                            <option>Company Admin</option>
+                        <label for="selectedRole">Role</label>
+                        <select name="selectedRole" id="selectedRole" class="form-control">
+                            <option selected>${selectedUser.role}</option>
+                            <c:forEach var="role" items="${roles}">
+                                <option>${role.roleName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group col-md">
+                        <label for="selectedActive">Active</label>
+                        <select name="selectedActive" id="selectedActive" class="form-control">
+                            <option selected>
+                                <c:choose>
+                                    <c:when test="${selectedUser.active==true}">
+                                        Yes 
+                                    </c:when>    
+                                    <c:otherwise>
+                                        No
+                                    </c:otherwise>
+                                </c:choose></option>
+                            <option>Yes</option>
+                            <option>No</option>
                         </select>
                     </div>
                 </div>
                 <button type="submit" disabled class="btn btn-primary bg-light text-dark">Save</button>
                 <button type="submit" disabled class="btn btn-primary bg-light text-dark">Cancel</button>
             </form>
+            </c:if>
         </div>
     </body>
 </html>

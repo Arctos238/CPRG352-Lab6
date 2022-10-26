@@ -5,6 +5,7 @@
 package sa.sait.services;
 
 import ca.sait.dataaccess.ConnectionPool;
+import ca.sait.dataaccess.RoleDB;
 import ca.sait.models.Role;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Arcto
+ * @author J.Pointer
  */
 public class RoleService {
     private ArrayList<Role> roles;
@@ -24,27 +25,11 @@ public class RoleService {
     }
 
     public ArrayList<Role> getAll() {
-        Connection conn = ConnectionPool.getInstance().getConnection();
         roles = new ArrayList();
-
-        try {
-            Statement stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery("SELECT * FROM role");
-
-            while (rs.next()) {
-                
-                int roleId = rs.getInt(1);
-                String roleName = rs.getString(2);
-                
-                Role role = new Role(roleId, roleName);
-                
-                roles.add(role);
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        
+        RoleDB rdb = new RoleDB();
+        
+        rdb.getAll(roles);
 
         return roles;
     }
