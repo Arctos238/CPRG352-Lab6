@@ -14,7 +14,8 @@
     </head>
     <body class="bg-dark text-white" style="font-size: 14px;">
         <div class="d-flex flex-column flex-xl-row flex-fill justify-content-between mt-5 container-fluid"> 
-            <form class="bg-secondary text-white mb-2 mt-2 p-2 ml-lg-3 ml-1 mr-2 border border-light">
+            <form action="user" method="POST" class="bg-secondary text-white mb-2 mt-2 p-2 ml-lg-3 ml-1 mr-2 border border-light">
+                <input type="hidden" name="action" value="addUser">
                 <h2 class="text-center">Add User</h2>
                 <div class="form-row">
                     <div class="form-group col-md">
@@ -25,17 +26,17 @@
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputPassword">Password</label>
-                        <input type="password" name="inputPassword" class="form-control" id="inputPassword" placeholder="Password">
+                        <input min=6 max=24 type="password" name="inputPassword" class="form-control" id="inputPassword" placeholder="Password">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputFirstName">First Name</label>
-                        <input type="text" name="inputFirstName" class="form-control" id="inputFirstName" placeholder="First Name">
+                        <input min=2 max=24 type="text" name="inputFirstName" class="form-control" id="inputFirstName" placeholder="First Name">
                     </div>
                     <div class="form-group col-md">
                         <label for="inputLastName">Last Name</label>
-                        <input type="text" name="inputLastName" class="form-control" id="inputLastName" placeholder="Last Name">
+                        <input min=2 max=24 type="text" name="inputLastName" class="form-control" id="inputLastName" placeholder="Last Name">
                     </div>
                 </div>
                 <div class="form-row">
@@ -90,8 +91,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td><a href="#">Edit</a></td>
-                                <td><a href="#">Delete</a></td>
+                                <td><a href="user?action=edit&user=${user.email}">Edit</a></td>
+                                <td><a href="user?action=delete&user=${user.email}">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

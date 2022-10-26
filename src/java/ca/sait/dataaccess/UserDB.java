@@ -33,16 +33,17 @@ public class UserDB {
                 + ", \"" + user.getFirstName() + "\", " +
                 "\"" + user.getLastName() + "\", " +
                 "\"" + user.getPassword()+ "\", " +
-                user.getRole().getRoleId();
+                user.getRole().getRoleId() + ")";
         
         DBUtil dbu = new DBUtil();
-        int rowsupdated = dbu.updateQuery(updateStmt);
+        int rowsUpdated = dbu.updateQuery(updateStmt);
+        
     }
 
     public void deleteUser(User user) {
 
         String updateStmt = "DELETE FROM user \n"
-                + "WHERE email =" + user.getEmail();
+                + "WHERE email = \"" + user.getEmail() + "\"";
 
         DBUtil dbu = new DBUtil();
         int rowsupdated = dbu.updateQuery(updateStmt);

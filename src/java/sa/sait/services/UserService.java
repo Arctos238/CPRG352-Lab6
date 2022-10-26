@@ -58,10 +58,13 @@ public class UserService {
     }
     
     public void createUser(User user) {
-        UserDB udb = new UserDB();
+        if (user != null) {
+            UserDB udb = new UserDB();
         
         udb.createUser(user);
         
         users.add(user);
+        }
+        
     }
 }
