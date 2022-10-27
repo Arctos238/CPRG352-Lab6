@@ -58,7 +58,8 @@ public class UserDB {
                 + "first_name = \"" + user.getFirstName() + "\", "
                 + "last_name = \"" + user.getLastName() + "\", "
                 + "role = \"" + user.getRole().getRoleId() + "\", "
-                + "active = \"" + active + "\"";
+                + "active = \"" + active + "\" WHERE "
+                + "email = \"" + user.getEmail() + "\"";
 
         DBUtil dbu = new DBUtil();
         int rowsupdated = dbu.updateQuery(updateStmt);

@@ -36,25 +36,14 @@ public class UserService {
 
     public void updateUser(User user) {
         UserDB udb = new UserDB();
-        
+       
         udb.updateUser(user);
-        
-        for(int i = 0; i < users.size(); i++) {
-            if (users.get(i).getEmail().equals(user.getEmail())) {
-                users.get(i).setFirstName(user.getFirstName());
-                users.get(i).setLastName(user.getLastName());
-                users.get(i).setRole(user.getRole());
-                users.get(i).setActive(user.isActive());
-            }
-        }
     }
     
     public void deleteUser(User user) {
         UserDB udb = new UserDB();
         
         udb.deleteUser(user);
-        
-        users.remove(user);
     }
     
     public void createUser(User user) {
@@ -62,8 +51,6 @@ public class UserService {
             UserDB udb = new UserDB();
         
         udb.createUser(user);
-        
-        users.add(user);
         }
         
     }

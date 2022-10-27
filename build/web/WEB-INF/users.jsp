@@ -97,59 +97,59 @@
                         </c:forEach>
                     </tbody>
                 </table>
-            </div>
-            
+            </div>     
             <c:if test="${selectedUser != null}">
-                            <form class="bg-secondary text-white mb-2 mt-2 p-2 ml-1 mr-lg-3 mr-2 border border-light flex-grow-2" style="font-size: 16px">
-                <h2 class="text-center">Edit User</h2>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="selectedEmail">Email</label>
-                        <input name="selectedEmail" disabled type="email" class="form-control" id="selectedEmail" placeholder="${selectedUser.email}">
+                <form action="user" method="POST" class="bg-secondary text-white mb-2 mt-2 p-2 ml-1 mr-lg-3 mr-2 border border-light flex-grow-2" style="font-size: 16px">
+                    <input type="hidden" name="action" value="update">
+                    <h2 class="text-center">Edit User</h2>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="selectedEmail">Email</label>
+                            <input readonly="readonly" name="selectedEmail" type="email" class="form-control" id="selectedEmail" value="${selectedUser.email}">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="selectedFirstName">First Name</label>
-                        <input name="selectedFirstName" type="text" class="form-control" id="selectedFirstName" placeholder="${selectedUser.firstName}">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="selectedFirstName">First Name</label>
+                            <input name="selectedFirstName" type="text" class="form-control" id="selectedFirstName" value="${selectedUser.firstName}">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="selectedLastName">Last Name</label>
-                        <input name="selectedLastName" type="text" class="form-control" id="selectedLastName" placeholder="${selectedUser.lastName}">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="selectedLastName">Last Name</label>
+                            <input name="selectedLastName" type="text" class="form-control" id="selectedLastName" value="${selectedUser.lastName}">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="selectedRole">Role</label>
-                        <select name="selectedRole" id="selectedRole" class="form-control">
-                            <option selected>${selectedUser.role}</option>
-                            <c:forEach var="role" items="${roles}">
-                                <option>${role.roleName}</option>
-                            </c:forEach>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="selectedRole">Role</label>
+                            <select name="selectedRole" id="selectedRole" class="form-control">
+                                <option selected>Current: ${selectedUser.role}</option>
+                                <c:forEach var="role" items="${roles}">
+                                    <option>${role.roleName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group col-md">
+                            <label for="selectedActive">Active</label>
+                            <select name="selectedActive" id="selectedActive" class="form-control">
+                                <option selected>
+                                    <c:choose>
+                                        <c:when test="${selectedUser.active==true}">
+                                        Current: Yes
+                                        </c:when>    
+                                        <c:otherwise>
+                                            Current: No
+                                        </c:otherwise>
+                                    </c:choose></option>
+                                <option>Yes</option>
+                                <option>No</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group col-md">
-                        <label for="selectedActive">Active</label>
-                        <select name="selectedActive" id="selectedActive" class="form-control">
-                            <option selected>
-                                <c:choose>
-                                    <c:when test="${selectedUser.active==true}">
-                                        Yes 
-                                    </c:when>    
-                                    <c:otherwise>
-                                        No
-                                    </c:otherwise>
-                                </c:choose></option>
-                            <option>Yes</option>
-                            <option>No</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="submit" disabled class="btn btn-primary bg-light text-dark">Save</button>
-                <button type="submit" disabled class="btn btn-primary bg-light text-dark">Cancel</button>
-            </form>
+                    <button type="submit" class="btn btn-primary bg-light text-dark">Save</button>
+                    <a href="user?action=cancel" class="btn btn-primary bg-light text-dark">Cancel</a>
+                </form>
             </c:if>
         </div>
     </body>
