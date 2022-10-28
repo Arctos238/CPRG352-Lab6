@@ -20,23 +20,23 @@
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputEmail">Email</label>
-                        <input type="email" name="inputEmail" class="form-control" id="inputEmail" placeholder="Email">
+                        <input required= type="email" name="inputEmail" class="form-control" id="inputEmail" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputPassword">Password</label>
-                        <input min=6 max=24 type="password" name="inputPassword" class="form-control" id="inputPassword" placeholder="Password">
+                        <input required min=6 max=24 type="password" name="inputPassword" class="form-control" id="inputPassword" placeholder="Password">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputFirstName">First Name</label>
-                        <input min=2 max=24 type="text" name="inputFirstName" class="form-control" id="inputFirstName" placeholder="First Name">
+                        <input required min=2 max=24 type="text" name="inputFirstName" class="form-control" id="inputFirstName" placeholder="First Name">
                     </div>
                     <div class="form-group col-md">
                         <label for="inputLastName">Last Name</label>
-                        <input min=2 max=24 type="text" name="inputLastName" class="form-control" id="inputLastName" placeholder="Last Name">
+                        <input required min=2 max=24 type="text" name="inputLastName" class="form-control" id="inputLastName" placeholder="Last Name">
                     </div>
                 </div>
                 <div class="form-row">
@@ -59,8 +59,11 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary bg-light text-dark">Save</button>
+               
+                <p class="mt-2"> <c:out value="${message.toString()}"/></p>
+                
             </form>
-            <div class="border border-light mb-2 mt-2 ml-4 mr-4 p-2 flex-grow-1">
+            <div class="border border-light mb-2 mt-2 ml-1 mr-2 p-2 flex-grow-1 flex-shrink-1">
                 <h2 class="text-center">Manage Users</h2>
                 <table class="table table-striped table-dark">
                     <thead>
@@ -105,19 +108,19 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="selectedEmail">Email</label>
-                            <input readonly="readonly" name="selectedEmail" type="email" class="form-control" id="selectedEmail" value="${selectedUser.email}">
+                            <input required readonly="readonly" name="selectedEmail" type="email" class="form-control" id="selectedEmail" value="${selectedUser.email}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="selectedFirstName">First Name</label>
-                            <input name="selectedFirstName" type="text" class="form-control" id="selectedFirstName" value="${selectedUser.firstName}">
+                            <input required name="selectedFirstName" type="text" class="form-control" id="selectedFirstName" value="${selectedUser.firstName}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="selectedLastName">Last Name</label>
-                            <input name="selectedLastName" type="text" class="form-control" id="selectedLastName" value="${selectedUser.lastName}">
+                            <input required name="selectedLastName" type="text" class="form-control" id="selectedLastName" value="${selectedUser.lastName}">
                         </div>
                     </div>
                     <div class="form-row">

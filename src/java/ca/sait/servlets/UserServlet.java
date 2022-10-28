@@ -40,9 +40,16 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         RoleService roleService = new RoleService();
         roles = roleService.getAll();
-
+        
+        
+        
         userService = new UserService();
+        
         users = userService.getAll(roles);
+        
+         if (users == null) {
+            users = new ArrayList<>();
+        }
 
         request.getSession().setAttribute("users", users);
         request.getSession().setAttribute("roles", roles);
@@ -50,6 +57,7 @@ public class UserServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action != null && action.equals("edit")) {
+            request.getSession().setAttribute("message", null);
             String userEmail = request.getParameter("user").replaceAll("\\s+", "+");
 
             User user = null;
@@ -59,9 +67,9 @@ public class UserServlet extends HttpServlet {
                     user = users.get(i);
                 }
             }
-
             request.getSession().setAttribute("selectedUser", user);
         } else if (action != null && action.equals("delete")) {
+            
             String userEmail = request.getParameter("user").replaceAll("\\s+", "+");
             User user = null;
 
@@ -118,40 +126,38 @@ public class UserServlet extends HttpServlet {
                     newRole = roles.get(i);
                 }
             }
-
-            if (newRole == null) {
-                validInputs = false;
-            }
-
+            
+            String message = null;
+            
+            
             if (inputEmail.length() == 0) {
                 validInputs = false;
-            }
-
-            if (inputPassword.length() == 0) {
+                message = "No email entered or email is invalid";
+            } else if (inputPassword.length() == 0) {
                 validInputs = false;
-            }
-
-            if (inputFirstName.length() == 0) {
+                message = "No password entered or password is invalid";
+            } else if (inputFirstName.length() == 0) {
                 validInputs = false;
-            }
-
-            if (inputLastName.length() == 0) {
+                message = "No first name entered or first name is invalid";
+            } else if (inputLastName.length() == 0) {
                 validInputs = false;
-            }
-
-            if (inputRole.equals("Select a role...")) {
+                message = "No last name entered or last name is invalid";
+            } else if (newRole == null) {
                 validInputs = false;
-            }
-
-            if (inputActive.equals("Is active...")) {
+                message = "Role not selected";
+            } else if (inputRole.equals("Select a role...")) {
                 validInputs = false;
-            }
-
-            if (validInputs) {
+                message = "Role field not selected";
+            } else if (inputActive.equals("Is active...")) {
+                validInputs = false;
+                message = "Active field not selected";
+            } else if (validInputs) {
                 User user = new User(inputEmail, booleanInputActive, inputFirstName, inputLastName, inputPassword, newRole);
                 userService.createUser(user);
+                message = "Success";
             }
-
+            
+            request.getSession().setAttribute("message", message);
             response.sendRedirect("user");
             return;
         } else if (action.equals("update")) {
@@ -187,6 +193,7 @@ public class UserServlet extends HttpServlet {
                 
                 newActive = selectedUser.isActive();
             }
+            
 
             selectedUser.setFirstName(selectedFirstName);
             selectedUser.setLastName(selectedLastName);
